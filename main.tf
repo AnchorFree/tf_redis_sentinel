@@ -10,7 +10,7 @@ resource "null_resource" "cluster" {
     private_key = "${module.creds.do_priv_key}"
     timeout     = "2m"
     port        = "${var.ssh_port}"
-    host        = "${length("${var.nodes_public_ips"}) == 0 ? element(values(var.nodes), count.index) : element(var.nodes_public_ips, count.index)}"
+    host        = "${length("${var.nodes_public_ips}") == 0 ? element(values(var.nodes), count.index) : element(var.nodes_public_ips, count.index)}"
   }
 
   provisioner "file" {
