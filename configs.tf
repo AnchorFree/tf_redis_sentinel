@@ -22,6 +22,6 @@ data "template_file" "redis_haproxy_config" {
 
   vars {
     master_pass       = "${var.master_pass}"
-    nodes             = "{"${var.nodes}"}"
+    nodes             = "${var.nodes}"
   }
 }
