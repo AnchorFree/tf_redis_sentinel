@@ -22,7 +22,7 @@ data "template_file" "redis_haproxy_config" {
 
   vars {
     master_pass       = "${var.master_pass}"
-    node_names             = ["${list(keys(var.nodes))}"]
-    node_ips             = ["${list(values(var.nodes))}"]
+    node_names             = "${join(",", keys(var.nodes))}"
+    node_ips             = "${join(",", values(var.nodes))}"
   }
 }
