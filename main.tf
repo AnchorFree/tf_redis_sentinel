@@ -1,6 +1,6 @@
 resource "null_resource" "cluster" {
   # terraform bug 10857 doesn't allow to compute count based on length(var.nodes)
-  count = "${var.count == 0}"
+  count = "${var.count}"
   triggers {
     master_ip = "${coalesce("${var.master_ip}", "${element(values(var.nodes), 0)}")}"
   }
