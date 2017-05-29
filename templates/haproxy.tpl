@@ -20,4 +20,4 @@ backend bk_redis
 	tcp-check expect string role:master\r\n
 	tcp-check send QUIT\r\n
 	tcp-check expect string +OK
-${join("\n", formatlist("\tserver %v %v:6380 check inter 1s", node_names, node_ips))}
+${join("\n", formatlist("\\tserver %v %v:6380 check inter 1s", node_names, node_ips))}
