@@ -1,5 +1,5 @@
 resource "null_resource" "cluster" {
-  count = "${var.count == 0 ? 0 : length(var.nodes)}"
+  count = "${var.count == 0 ? 0 : length(values(var.nodes))}"
   triggers {
     master_ip = "${coalesce("${var.master_ip}", "${element(values(var.nodes), 0)}")}"
   }
