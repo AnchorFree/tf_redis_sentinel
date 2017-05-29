@@ -12,6 +12,10 @@ variable "user" {
   description = "Initial user to connect and provision"
 }
 
+variable "master_pass" {
+  description = "Password to monitor master server"
+}
+
 variable "ssh_port" {
   default     = "22"
   description = "Initial port for ssh connection"
@@ -22,7 +26,13 @@ variable "master_ip" {
   description = "Redis master IP address"
 }
 
-variable "nodes" {
+variable "nodes_public_ips" {
   type        = "list"
-  description = "IPs of the redis servers, first will be configured as a master if no master_ip defined"
+  default     = []
+  description = "IPs of the redis servers to connect for provisioning, if not defined, nodes is used instead"
+}
+
+variable "nodes" {
+  type        = "map"
+  description = "name = IP map of the redis servers, first will be configured as a master if no master_ip defined"
 }

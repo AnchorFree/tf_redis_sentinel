@@ -2,7 +2,8 @@ data "template_file" "redis_slave_config" {
   template = "${file("${path.module}/templates/slave_config.tpl")}"
 
   vars {
-    master_ip_address = "${coalesce("${var.master_ip}", "${var.nodes[0]}")}"
+    master_pass       = "${var.master_pass}"
+    master_ip_address = "${coalesce("${var.master_ip}", "${element(values(var.nodes), 0)}")}"
   }
 }
 
@@ -11,6 +12,16 @@ data "template_file" "redis_sentinel_config" {
 
   vars {
     cluster_name      = "${var.cluster_name}"
-    master_ip_address = "${coalesce("${var.master_ip}", "${var.nodes[0]}")}"
+    master_pass       = "${var.master_pass}"
+    master_ip_address = "${coalesce("${var.master_ip}", "${element(values(var.nodes), 0)}")}"
+  }
+}
+
+data "template_file" "redis_haproxy_config" {
+  template = "${file("${path.module}/templates/haproxy.tpl")}"
+
+  vars {
+    master_pass       = "${var.master_pass}"
+    nodes             = "${var.nodes}"
   }
 }
