@@ -2,7 +2,7 @@ resource "null_resource" "cluster" {
   # terraform bug 10857 doesn't allow to compute count based on length(var.nodes)
   count = "${var.count}"
   triggers {
-    master_ip = "${coalesce("${var.master_ip}", "${element(values(var.nodes), 0)}")}"
+    nodes = "${values(var.nodes)}"
   }
 
   connection {
@@ -16,8 +16,8 @@ resource "null_resource" "cluster" {
   }
 
   provisioner "file" {
-    content     = "${data.template_file.redis_slave_config.rendered}"
-    destination = "/tmp/redis-slave.config"
+    content     = "${count.index == 0 ? data.template_file.redis_master_config.rendered : data.template_file.redis_slave_config.rendered}"
+    destination = "/tmp/redis-server.config"
   }
 
   provisioner "file" {

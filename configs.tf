@@ -7,6 +7,14 @@ data "template_file" "redis_slave_config" {
   }
 }
 
+data "template_file" "redis_master_config" {
+  template = "${file("${path.module}/templates/master_config.tpl")}"
+
+  vars {
+    master_pass       = "${var.master_pass}"
+  }
+}
+
 data "template_file" "redis_sentinel_config" {
   template = "${file("${path.module}/templates/sentinel_config.tpl")}"
 
