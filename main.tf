@@ -1,5 +1,5 @@
 resource "null_resource" "cluster" {
-  count = "${length(var.nodes)}"
+  count = "${if var.count == 0 ? 0 : length(var.nodes)}"
   triggers {
     master_ip = "${var.nodes[0]}"
   }
