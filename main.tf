@@ -12,7 +12,7 @@ resource "null_resource" "cluster" {
     timeout     = "2m"
     port        = "${var.ssh_port}"
    # terraform bug 14399 workaround
-    host        = "${length(var.nodes_public_ips) == 0 ? format("%s", element(values(var.nodes), count.index)) : format("%s", element(var.nodes_public_ips, count.index))}"
+    host        = "${length(var.nodes_public_ips) == 0 ? format("%s", element(concat(values(var.nodes), list("")), count.index)) : format("%s", element(concat(var.nodes_public_ips, list("")), count.index))}"
   }
 
   provisioner "file" {
