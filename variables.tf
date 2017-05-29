@@ -17,7 +17,12 @@ variable "ssh_port" {
   description = "Initial port for ssh connection"
 }
 
+variable "master_ip" {
+  default     = ""
+  description = "Redis master IP address"
+}
+
 variable "nodes" {
   type        = "list"
-  description = "IPs of the redis servers, first will be configured as a master"
+  description = "IPs of the redis servers, first will be configured as a master if no master_ip defined"
 }
