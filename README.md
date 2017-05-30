@@ -15,11 +15,13 @@ Module to provision sentinel related configs for further usage by redis cluster
 | `nodes` | "map" | NA | "name = IP map of the redis servers, first will be configured as a master if no master_ip defined" |
 
 ### what it does
+
 Basically it creates 3 files:
+
 | File | Changed on scale | Description |
-|------|-------------|------------------|
-|/etc/redis/redis-snetinel.conf | No | Sentinel configuration, pointing quorum size, master server and cluster name. |
-|/etc/redis/redis-server.conf | No| Depends on the server type (master or slave), it generates the file for the redis-server. |
+|------|------------------|-------------|
+| /etc/redis/redis-snetinel.conf | No | Sentinel configuration, pointing quorum size, master server and cluster name. |
+| /etc/redis/redis-server.conf | No| Depends on the server type (master or slave), it generates the file for the redis-server. |
 | /etc/redis/redis-haproxy.conf | Yes | Listens to port 6379 (default redis) and peak master based on replication information | 
 
 Real redis server is listening to port `6380`, while `6379` - is listened by HAproxy, which is targeting master server based on healthchecks, with maximum downtime of 3 seconds. 
