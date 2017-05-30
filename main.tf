@@ -2,7 +2,7 @@ resource "null_resource" "cluster" {
   # terraform bug 10857 doesn't allow to compute count based on length(var.nodes)
   count = "${var.count}"
   triggers {
-    nodes = "${join(",", values(var.nodes))}"
+    nodes = "${element(values(var.nodes), 0)}"
   }
 
   connection {
