@@ -34,9 +34,6 @@ resource "null_resource" "redis-haproxy" {
 resource "null_resource" "redis-sentinel" {
   # terraform bug 10857 doesn't allow to compute count based on length(var.nodes)
   count = "${var.count}"
-  triggers {
-    nodes = "${element(values(var.nodes), 0)}"
-  }
 
   connection {
     user        = "${coalesce("${var.user}","root")}"
