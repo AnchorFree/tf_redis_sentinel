@@ -11,8 +11,8 @@ frontend ft_redis
 backend bk_redis
     option tcp-check
     tcp-check connect
-    tcp-check send AUTH ${master_pass}\r\n
-    tcp-check expect string OK
+    tcp-check send AUTH\ ${master_pass}\r\n
+    tcp-check expect string +OK\r\n
     tcp-check send PING\r\n
     tcp-check expect string +PONG
     tcp-check send info\ replication\r\n
