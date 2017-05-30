@@ -1,0 +1,4 @@
+.PHONEY: all
+
+all:
+	true
