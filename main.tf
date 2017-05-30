@@ -17,23 +17,24 @@ resource "null_resource" "cluster" {
 
   provisioner "file" {
     content     = "${count.index == 0 ? data.template_file.redis_master_config.rendered : data.template_file.redis_slave_config.rendered}"
-    destination = "/tmp/redis-server.config"
+    destination = "/tmp/redis-server.conf"
   }
 
   provisioner "file" {
     content     = "${data.template_file.redis_haproxy_config.rendered}"
-    destination = "/tmp/redis-haproxy.cfg"
+    destination = "/tmp/redis-haproxy.conf"
   }
 
   provisioner "file" {
     content     = "${data.template_file.redis_sentinel_config.rendered}"
-    destination = "/tmp/redis-sentinel.config"
+    destination = "/tmp/redis-sentinel.conf"
   }
 
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
       "mkdir -p /etc/redis",
+      "rmdir /etc/redis/redis-*.conf || true",
       "sudo mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
