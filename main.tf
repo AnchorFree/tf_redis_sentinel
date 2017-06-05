@@ -23,9 +23,8 @@ resource "null_resource" "redis-haproxy" {
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
-      "mkdir -p /etc/redis",
-      "rmdir /etc/redis/redis-haproxy.conf || true",
-      "sudo mv /tmp/redis* /etc/redis/",
+      "test -d /etc/redis && { rm -rf /etc/redis; mkdir -p /etc/redis; } || true",
+      "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
   }
@@ -58,9 +57,8 @@ resource "null_resource" "redis-sentinel" {
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
-      "mkdir -p /etc/redis",
-      "rmdir /etc/redis/redis-*.conf || true",
-      "sudo mv /tmp/redis* /etc/redis/",
+      "test -d /etc/redis && { rm -rf /etc/redis; mkdir -p /etc/redis; } || true",
+      "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
   }
