@@ -24,7 +24,7 @@ resource "null_resource" "redis-haproxy" {
     # copy file to the proper directory
     inline = [
       "test -d /etc/redis || mkdir -p /etc/redis",
-      "rm -f /etc/redis/redis-haproxy.conf 2>/dev/null || true",
+      "rm -rf /etc/redis/redis-haproxy.conf 2>/dev/null || true",
       "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
@@ -59,7 +59,8 @@ resource "null_resource" "redis-sentinel" {
     # copy file to the proper directory
     inline = [
       "test -d /etc/redis || mkdir -p /etc/redis",
-      "rm -f /etc/redis/redis-* 2>/dev/null || true",
+      "rm -rf /etc/redis/redis-sentinel.conf 2>/dev/null || true",
+      "rm -rf /etc/redis/redis-server.conf 2>/dev/null || true",
       "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
