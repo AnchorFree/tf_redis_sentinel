@@ -65,6 +65,7 @@ resource "null_resource" "redis-sentinel" {
       "rmdir /etc/redis/redis-server.conf 2>/dev/null || true",
       "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
+      "test -x /usr/local/bin/docker-updater.sh && sudo /usr/local/bin/docker-updater.sh run",
     ]
   }
 }
