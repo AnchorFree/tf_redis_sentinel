@@ -24,7 +24,7 @@ resource "null_resource" "redis-haproxy" {
     # copy file to the proper directory
     inline = [
       "test -d /etc/redis || mkdir -p /etc/redis",
-      "rm -rf /etc/redis/redis-haproxy.conf 2>/dev/null || true",
+      "rmdir /etc/redis/redis-haproxy.conf 2>/dev/null || true",
       "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
@@ -58,9 +58,11 @@ resource "null_resource" "redis-sentinel" {
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
+      "docker rm -f haproxy-redis redis-server redis-sentinel || true",
       "test -d /etc/redis || mkdir -p /etc/redis",
-      "rm -rf /etc/redis/redis-sentinel.conf 2>/dev/null || true",
-      "rm -rf /etc/redis/redis-server.conf 2>/dev/null || true",
+      "mkdir -p /etc/redis",
+      "rmdir /etc/redis/redis-sentinel.conf 2>/dev/null || true",
+      "rmdir /etc/redis/redis-server.conf 2>/dev/null || true",
       "mv /tmp/redis* /etc/redis/",
       "chmod 0666 /etc/redis/*",
     ]
