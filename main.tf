@@ -25,7 +25,7 @@ resource "null_resource" "redis-haproxy" {
     inline = [
       "test -d /etc/redis || mkdir -p /etc/redis",
       "rmdir /etc/redis/redis-haproxy.conf 2>/dev/null || true",
-      "mv /tmp/redis* /etc/redis/",
+      "mv /tmp/redis-haproxy.conf /etc/redis/ || true ",
       "chmod 0666 /etc/redis/*",
     ]
   }
