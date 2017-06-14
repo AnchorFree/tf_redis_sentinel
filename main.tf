@@ -23,10 +23,10 @@ resource "null_resource" "redis-haproxy" {
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
-      "test -d /etc/redis || mkdir -p /etc/redis",
-      "rmdir /etc/redis/redis-haproxy.conf 2>/dev/null || true",
-      "mv /tmp/redis-haproxy.conf /etc/redis/ || true ",
-      "chmod 0666 /etc/redis/*",
+      "test -d /etc/redis || sudo mkdir -p /etc/redis",
+      "sudo rmdir /etc/redis/redis-haproxy.conf 2>/dev/null || true",
+      "sudo mv /tmp/redis-haproxy.conf /etc/redis/ || true ",
+      "sudo chmod 0666 /etc/redis/*",
     ]
   }
 }
@@ -58,13 +58,13 @@ resource "null_resource" "redis-sentinel" {
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
-      "docker rm -f haproxy-redis redis-server redis-sentinel || true",
-      "test -d /etc/redis || mkdir -p /etc/redis",
-      "mkdir -p /etc/redis",
-      "rmdir /etc/redis/redis-sentinel.conf 2>/dev/null || true",
-      "rmdir /etc/redis/redis-server.conf 2>/dev/null || true",
-      "mv /tmp/redis* /etc/redis/",
-      "chmod 0666 /etc/redis/*",
+      "sudo docker rm -f haproxy-redis redis-server redis-sentinel || true",
+      "test -d /etc/redis || sudo mkdir -p /etc/redis",
+      "sudo mkdir -p /etc/redis",
+      "sudo rmdir /etc/redis/redis-sentinel.conf 2>/dev/null || true",
+      "sudo rmdir /etc/redis/redis-server.conf 2>/dev/null || true",
+      "sudo mv /tmp/redis* /etc/redis/",
+      "sudo chmod 0666 /etc/redis/*",
       "sudo /usr/local/bin/docker-updater.sh run || true",
     ]
   }
