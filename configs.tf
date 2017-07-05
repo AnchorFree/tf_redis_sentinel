@@ -1,4 +1,5 @@
 data "template_file" "redis_slave_config" {
+  count    = "${var.count = "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/slave_config.tpl")}"
 
   vars {
@@ -8,14 +9,16 @@ data "template_file" "redis_slave_config" {
 }
 
 data "template_file" "redis_master_config" {
+  count    = "${var.count = "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/master_config.tpl")}"
 
   vars {
-    master_pass       = "${var.master_pass}"
+    master_pass = "${var.master_pass}"
   }
 }
 
 data "template_file" "redis_sentinel_config" {
+  count    = "${var.count = "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/sentinel_config.tpl")}"
 
   vars {
@@ -27,11 +30,12 @@ data "template_file" "redis_sentinel_config" {
 }
 
 data "template_file" "redis_haproxy_config" {
+  count    = "${var.count = "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/haproxy.tpl")}"
 
   vars {
-    master_pass       = "${var.master_pass}"
-    node_names             = "${join(",", keys(var.nodes))}"
-    node_ips             = "${join(",", values(var.nodes))}"
+    master_pass = "${var.master_pass}"
+    node_names  = "${join(",", keys(var.nodes))}"
+    node_ips    = "${join(",", values(var.nodes))}"
   }
 }

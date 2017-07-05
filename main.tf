@@ -1,6 +1,7 @@
 resource "null_resource" "redis-haproxy" {
   # terraform bug 10857 doesn't allow to compute count based on length(var.nodes)
   count = "${var.count}"
+
   triggers {
     nodes = "${join( ",", values(var.nodes))}"
   }
@@ -11,8 +12,9 @@ resource "null_resource" "redis-haproxy" {
     private_key = "${module.creds.do_priv_key}"
     timeout     = "2m"
     port        = "${var.ssh_port}"
-   # terraform bug 14399 workaround
-    host        = "${length(var.nodes_public_ips) == 0 ? format("%s", element(concat(values(var.nodes), list("")), count.index)) : format("%s", element(concat(var.nodes_public_ips, list("")), count.index))}"
+
+    # terraform bug 14399 workaround
+    host = "${length(var.nodes_public_ips) == 0 ? format("%s", element(concat(values(var.nodes), list("")), count.index)) : format("%s", element(concat(var.nodes_public_ips, list("")), count.index))}"
   }
 
   provisioner "file" {
@@ -41,8 +43,9 @@ resource "null_resource" "redis-sentinel" {
     private_key = "${module.creds.do_priv_key}"
     timeout     = "2m"
     port        = "${var.ssh_port}"
-   # terraform bug 14399 workaround
-    host        = "${length(var.nodes_public_ips) == 0 ? format("%s", element(concat(values(var.nodes), list("")), count.index)) : format("%s", element(concat(var.nodes_public_ips, list("")), count.index))}"
+
+    # terraform bug 14399 workaround
+    host = "${length(var.nodes_public_ips) == 0 ? format("%s", element(concat(values(var.nodes), list("")), count.index)) : format("%s", element(concat(var.nodes_public_ips, list("")), count.index))}"
   }
 
   provisioner "file" {
