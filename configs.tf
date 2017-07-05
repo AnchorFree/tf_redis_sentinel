@@ -1,5 +1,5 @@
 data "template_file" "redis_slave_config" {
-  count    = "${var.count = "0" ? 0 : 1}"
+  count    = "${var.count == "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/slave_config.tpl")}"
 
   vars {
@@ -9,7 +9,7 @@ data "template_file" "redis_slave_config" {
 }
 
 data "template_file" "redis_master_config" {
-  count    = "${var.count = "0" ? 0 : 1}"
+  count    = "${var.count == "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/master_config.tpl")}"
 
   vars {
@@ -18,7 +18,7 @@ data "template_file" "redis_master_config" {
 }
 
 data "template_file" "redis_sentinel_config" {
-  count    = "${var.count = "0" ? 0 : 1}"
+  count    = "${var.count == "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/sentinel_config.tpl")}"
 
   vars {
@@ -30,7 +30,7 @@ data "template_file" "redis_sentinel_config" {
 }
 
 data "template_file" "redis_haproxy_config" {
-  count    = "${var.count = "0" ? 0 : 1}"
+  count    = "${var.count == "0" ? 0 : 1}"
   template = "${file("${path.module}/templates/haproxy.tpl")}"
 
   vars {
