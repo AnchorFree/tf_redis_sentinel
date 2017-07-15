@@ -58,6 +58,11 @@ resource "null_resource" "redis-sentinel" {
     destination = "/tmp/redis-sentinel.conf"
   }
 
+  provisioner "file" {
+    content     = "${data.template_file.redis_ipset_config.rendered}"
+    destination = "/etc/ipset/redis.conf"
+  }
+
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [

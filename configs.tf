@@ -39,3 +39,11 @@ data "template_file" "redis_haproxy_config" {
     node_ips    = "${join(",", values(var.nodes))}"
   }
 }
+
+data "template_file" "redis_ipset_config" {
+  template = "${file("${path.module}/templates/ipset_redis.tpl")}"
+
+  vars {
+    node_ips = "${join(",", values(var.nodes))}"
+  }
+}
