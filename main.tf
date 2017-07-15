@@ -73,6 +73,7 @@ resource "null_resource" "redis-sentinel" {
       "sudo rmdir /etc/redis/redis-server.conf 2>/dev/null || true",
       "sudo mv /tmp/redis* /etc/redis/",
       "sudo chmod 0666 /etc/redis/*",
+      "sudo /bin/systemctl reload ipset-restore.service || true",
       "sudo /usr/local/bin/docker-updater.sh run || true",
     ]
   }
