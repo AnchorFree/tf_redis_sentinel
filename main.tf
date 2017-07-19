@@ -24,7 +24,7 @@ resource "null_resource" "redis-haproxy" {
 
   provisioner "file" {
     content     = "${data.template_file.redis_ipset_config.rendered}"
-    destination = "/etc/ipset/redis.conf"
+    destination = "/tmp/ipset-redis.conf"
   }
 
   provisioner "remote-exec" {
@@ -33,6 +33,7 @@ resource "null_resource" "redis-haproxy" {
       "test -d /etc/redis || sudo mkdir -p /etc/redis",
       "sudo rmdir /etc/redis/redis-haproxy.conf 2>/dev/null || true",
       "sudo mv /tmp/redis-haproxy.conf /etc/redis/ || true ",
+      "sudo mv /tmp/ipset-redis.conf /etc/ipset/redis.conf || true ",
       "sudo chmod 0666 /etc/redis/*",
     ]
   }
