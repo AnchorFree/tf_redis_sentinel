@@ -22,6 +22,11 @@ resource "null_resource" "redis-haproxy" {
     destination = "/tmp/redis-haproxy.conf"
   }
 
+  provisioner "file" {
+    content     = "${data.template_file.redis_ipset_config.rendered}"
+    destination = "/etc/ipset/redis.conf"
+  }
+
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
@@ -56,11 +61,6 @@ resource "null_resource" "redis-sentinel" {
   provisioner "file" {
     content     = "${data.template_file.redis_sentinel_config.rendered}"
     destination = "/tmp/redis-sentinel.conf"
-  }
-
-  provisioner "file" {
-    content     = "${data.template_file.redis_ipset_config.rendered}"
-    destination = "/etc/ipset/redis.conf"
   }
 
   provisioner "remote-exec" {
