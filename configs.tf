@@ -23,7 +23,7 @@ data "template_file" "redis_sentinel_config" {
 
   vars {
     cluster_name      = "${var.cluster_name}"
-    quorum            = "${length(var.node) > 2 ? 2 : 1 }"
+    quorum            = "${length(var.nodes) > 2 ? 2 : 1 }"
     master_pass       = "${var.master_pass}"
     master_ip_address = "${coalesce("${var.master_ip}", "${element(values(var.nodes), 0)}")}"
   }
