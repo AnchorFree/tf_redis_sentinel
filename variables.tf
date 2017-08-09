@@ -2,6 +2,11 @@ variable "cluster_name" {
   description = "Name of the redis cluster, must be unique"
 }
 
+variable "do_account" {
+  default     = "partner"
+  description = "Preferred account to create DO instances in, default is: partner"
+}
+
 variable "count" {
   default     = "1"
   description = "if it is 0 - we don't create it, if != 0 - we generate configs based on amount of nodes"
