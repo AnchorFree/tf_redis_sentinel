@@ -2,6 +2,7 @@ variable "cluster_name" {
   description = "Name of the redis cluster, must be unique"
 }
 
+# TODO: remove this default after we mirgate to new DO account
 variable "do_account" {
   default     = "partner"
   description = "Preferred account to create DO instances in, default is: partner"
