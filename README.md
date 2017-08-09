@@ -6,6 +6,7 @@ Module to provision sentinel related configs for further usage by redis cluster
 | Variable | Type | Default | Description |
 |----------|------|---------|-------------|
 | `cluster_name` | string | NA | Name of the redis cluster, must be unique |
+| `do_account` | string | partner | DigitalOcean account name to use for instances creation and provisioning |
 | `count` | string|  NA | Amount of nodes in cluster |
 | `user` |   string  | "" | "Initial user to connect and provision" |
 | `master_pass` | string | NA | "Password to connect to redis server" |
