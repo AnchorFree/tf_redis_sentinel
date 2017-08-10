@@ -43,6 +43,10 @@ resource "null_resource" "redis-sentinel" {
   # terraform bug 10857 doesn't allow to compute count based on length(var.nodes)
   count = "${var.count}"
 
+  triggers {
+    nodes = "${join( ",", values(var.nodes))}"
+  }
+
   connection {
     user        = "${coalesce("${var.user}","root")}"
     type        = "ssh"
@@ -67,15 +71,15 @@ resource "null_resource" "redis-sentinel" {
   provisioner "remote-exec" {
     # copy file to the proper directory
     inline = [
-      "sudo docker rm -f haproxy-redis redis-server redis-sentinel || true",
       "test -d /etc/redis || sudo mkdir -p /etc/redis",
-      "sudo mkdir -p /etc/redis",
+      "test -f /etc/redis/configured || sudo docker rm -f haproxy-redis redis-server redis-sentinel || true",
       "sudo rmdir /etc/redis/redis-sentinel.conf 2>/dev/null || true",
       "sudo rmdir /etc/redis/redis-server.conf 2>/dev/null || true",
-      "sudo mv /tmp/redis* /etc/redis/",
+      "sudo mv -n /tmp/redis* /etc/redis/",
       "sudo chmod 0666 /etc/redis/*",
       "sudo /bin/systemctl reload ipset-restore.service || true",
-      "sudo /usr/local/bin/docker-updater.sh run || true",
+      "test -f /etc/redis/configured || sudo /usr/local/bin/docker-updater.sh run || true",
+      "sudo touch /etc/redis/configured",
     ]
   }
 }
